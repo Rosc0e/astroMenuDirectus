@@ -1,22 +1,70 @@
+---
+import BackButton from "@components/backbutton";
+// import "@fontsource-variable/rubik";
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/vape.png" />
+		<link rel="icon" type="image/icon" href="/vape.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Menu</title>
 	</head>
 	<body>
+		{
+			Astro.url.pathname !== "/" ? (
+				<nav>
+					<BackButton client:load />
+				</nav>
+			) : null
+		}
 		<slot />
+		{
+			Astro.url.pathname === "/" ? null : (
+				<button
+					id="top-button"
+					class="fixed bottom-1 bg-sky-100 p-2 rounded-full right-1 z-10"
+					title="Go to top"
+				>
+					<svg
+						width="50px"
+						height="50px"
+						viewBox="0 0 16 16"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							d="M13 9H10V16H6V9L3 9V8L8 3L13 8V9Z"
+							fill="#000000"
+						/>
+						<path d="M14 2H2V0H14V2Z" fill="#000000" />
+					</svg>
+					To Top
+				</button>
+			)
+		}
+		<script is:inline>
+			const topButton = document.getElementById("top-button");
+			if (topButton) {
+				topButton.addEventListener("click", () => {
+					window.scrollTo({ top: 0, behavior: "smooth" });
+				});
+			}
+		</script>
 	</body>
 </html>
 
 <style>
 	html,
 	body {
+		font-family: "Rubik Variable", sans-serif;
+		@apply bg-sky-100;
 		margin: 0;
 		width: 100%;
 		height: 100%;
+		/* @apply overflow-x-hidden; */
 	}
 </style>

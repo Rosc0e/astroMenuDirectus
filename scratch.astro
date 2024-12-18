@@ -1,0 +1,41 @@
+---
+import Layout from "@layouts/Layout.astro";
+import type { ProductEntry } from "src/lib/directus";
+
+// Fetch the disposables data
+const res = await fetch("http://0.0.0.0:8055/items/disposables", {
+    method: "GET",
+});
+
+const items = await res.json();
+console.log(items.data);
+
+// Base URL for assets
+const assetBaseUrl = "http://0.0.0.0:8055/assets/";
+---
+
+<Layout>
+    <div class="disposable-brands">
+        {
+            items.data.map((data: ProductEntry) => {
+                const imageUrl = `${assetBaseUrl}${data.product_image}`;
+
+                return (
+                    <a
+                        href={`/disposable_brands/${data.id}`}
+                        class="brand-link"
+                    >
+                        <div class="brand-item">
+                            <img
+                                src={imageUrl}
+                                alt={data.Brand_Name}
+                                class="brand-image"
+                            />
+                            <div class="brand-name">{data.Brand_Name}</div>
+                        </div>
+                    </a>
+                );
+            })
+        }
+    </div>
+</Layout>

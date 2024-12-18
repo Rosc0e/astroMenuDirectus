@@ -1,11 +1,37 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Category from "@components/Category.astro";
+import dispo from "../assets/category_imgs/dispo.jpg";
+import salt from "../assets/category_imgs/saltnic.webp";
+import freebase from "../assets/category_imgs/freebase.png";
+import pouches from "../assets/category_imgs/pouches.png";
+import Layout from "@layouts/Layout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// const res = await fetch("http://0.0.0.0:8055/collections", {
+// 	method: "GET",
+// });
+// const items = await res.json();
+// // const string = JSON.parse(data);
+// // const testData = string[0].id;
+// console.log(items.data);
 ---
 
+<!-- todo: add pics for categories -->
 <Layout>
-	<Welcome />
+	<div
+		id="container"
+		class="text-5xl flex flex-col lg:flex-row lg:justify-center lg:items-center lg:h-screen items-baseline gap-5"
+	>
+		<Category link="/disposable_brands" imgSrc={dispo} text="Disposables" />
+		<Category link="/freebase" imgSrc={freebase} text="Freebase E-Juice " />
+		<Category
+			link="/salt_nic"
+			extraClass="mt"
+			imgSrc={salt}
+			text="Salt Nic E-Juice "
+		/>
+		<Category link="/pouches" imgSrc={pouches} text="Pouches" />
+		<script>
+			console.log("s");
+		</script>
+	</div>
 </Layout>

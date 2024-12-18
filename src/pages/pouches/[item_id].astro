@@ -1,0 +1,23 @@
+---
+const { brand_name, item_id } = Astro.params;
+import type { ProductEntry } from "src/lib/directus";
+const res = await fetch(`http://0.0.0.0:8055/items/pouches/${item_id}`);
+const data = await res.json();
+const item: ProductEntry = data.data;
+console.log(item);
+---
+
+<div class="ml-10 mt-10">
+    <div
+        class="text-5xl md:text-6xl font-bold w-fit underline decoration-indigo-500 capitalize"
+    >
+        {item.brand_name}
+        <div class="text-2xl mt-1 text-right underline decoration-indigo-400">
+            ${item.price}
+        </div>
+    </div>
+
+    <div class="text-4xl md:text-5xl capitalize mt-10">
+        {item.flavors.map((flavor: string) => <div>{flavor}</div>)}
+    </div>
+</div>

@@ -1,0 +1,47 @@
+---
+import Layout from "@layouts/Layout.astro";
+import type { ProductEntry } from "src/lib/directus";
+
+// Fetch the freebase data
+const res = await fetch("http://0.0.0.0:8055/items/freebase_ejuice", {
+    method: "GET",
+});
+
+const items = await res.json();
+console.log(items.data);
+
+// Base URL for assets
+const assetBaseUrl = "http://0.0.0.0:8055/assets/";
+---
+
+<Layout>
+    <div class="flex gap-5 flex-wrap justify-evenly">
+        {
+            items.data.map((data: ProductEntry) => {
+                const imageUrl = `${assetBaseUrl}${data.product_image}`;
+
+                return (
+                    <a
+                        href={`/freebase/${data.id}`}
+                        class="shadow-lg border rounded-md"
+                    >
+                        <div class="brand-item">
+                            <img
+                                src={imageUrl}
+                                width="500"
+                                alt={data.brand_name}
+                                class=""
+                            />
+                        </div>{" "}
+                        <div class="text-3xl my-5 capitalize text-center">
+                            {data.brand_name}
+                        </div>
+                        <div class="border font-bold m-5 rounded-md bg-blue-400  text-center p-2 text-3xl">
+                            See Flavors
+                        </div>
+                    </a>
+                );
+            })
+        }
+    </div>
+</Layout>
