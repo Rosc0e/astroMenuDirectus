@@ -8,11 +8,7 @@ export interface ProductEntry  {
     product_image: string;
 }
 
-
-
-
-
-
-const directus = createDirectus('http://0.0.0.0:8055').with(rest());
+const directusUrl = import.meta.env.VITE_DIRECTUS_URL || "http://directus:8055";
+const directus = createDirectus(directusUrl).with(rest());
 
 export default directus;

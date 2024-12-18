@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  directus:
+    image: directus/directus:11.3.2
+    ports:
+      - "8055:8055"
+    volumes:
+      - ./database:/directus/database
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+    environment:
+      SECRET: "replace-with-secure-random-value"
+      ADMIN_EMAIL: "blake@koepcke.xyz"
+      ADMIN_PASSWORD: "password"
+      DB_CLIENT: "sqlite3"
+      DB_FILENAME: "/directus/database/data.db"
+      WEBSOCKETS_ENABLED: "true"
+    networks:
+      - app-network
+
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4321:4321"
+    environment:
+      VITE_DIRECTUS_URL: "http://directus:8055"
+    depends_on:
+      - directus
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

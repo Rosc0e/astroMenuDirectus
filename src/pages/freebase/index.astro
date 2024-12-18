@@ -2,8 +2,10 @@
 import Layout from "@layouts/Layout.astro";
 import type { ProductEntry } from "src/lib/directus";
 
+const directusUrl = import.meta.env.VITE_DIRECTUS_URL || "http://directus:8055";
+
 // Fetch the freebase data
-const res = await fetch("http://0.0.0.0:8055/items/freebase_ejuice", {
+const res = await fetch(`${directusUrl}/items/freebase_ejuice`, {
     method: "GET",
 });
 
@@ -11,7 +13,7 @@ const items = await res.json();
 console.log(items.data);
 
 // Base URL for assets
-const assetBaseUrl = "http://0.0.0.0:8055/assets/";
+const assetBaseUrl = `${directusUrl}/assets/`;
 ---
 
 <Layout>
