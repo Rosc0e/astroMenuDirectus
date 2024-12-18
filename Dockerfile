@@ -14,7 +14,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose the port the app runs on
+ENV HOST=0.0.0.0
+ENV PORT=4321
 EXPOSE 4321
 
 # Start the application
