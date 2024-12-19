@@ -1,22 +1,30 @@
 ---
-const { brand_name, item_id } = Astro.params;
+import Layout from "@layouts/Layout.astro";
+import type { ProductEntry } from "src/lib/directus";
 
-const data = await fetch(`http://0.0.0.0:8055/items/disposables/${item_id}`);
+const { brand_name, item_id } = Astro.params;
+const directusUrl = import.meta.env.VITE_DIRECTUS_URL || "http://directus:8055";
+
+const data = await fetch(`${directusUrl}/items/disposables/${item_id}`);
 const item = await data.json();
 console.log(item);
 ---
 
-<div class="ml-10 mt-10">
-    <div
-        class="text-5xl md:text-6xl font-bold w-fit underline decoration-indigo-500 capitalize"
-    >
-        {item.data.brand_name}
-        <div class="text-2xl mt-1 text-right underline decoration-indigo-400">
-            ${item.data.price}
+<Layout>
+    <div class="ml-10 mt-10">
+        <div
+            class="text-5xl md:text-6xl font-bold w-fit underline decoration-indigo-500 capitalize"
+        >
+            {item.data.brand_name}
+            <div
+                class="text-2xl mt-1 text-right underline decoration-indigo-400"
+            >
+                ${item.data.price}
+            </div>
+        </div>
+
+        <div class="text-4xl md:text-5xl capitalize mt-10">
+            {item.data.flavors.map((flavor: string) => <div>{flavor}</div>)}
         </div>
     </div>
-
-    <div class="text-4xl md:text-5xl capitalize mt-10">
-        {item.data.flavors.map((flavor: string) => <div>{flavor}</div>)}
-    </div>
-</div>
+</Layout>
