@@ -1,34 +1,37 @@
 ---
 import type { ProductEntry } from "src/lib/directus";
+
 const { items, assetBaseUrl } = Astro.props;
 ---
 
 <div class="flex gap-5 flex-wrap justify-around">
     {
-        items.data.map((data: ProductEntry) => {
-            const imageUrl = `${assetBaseUrl}${data.product_image}`;
+        items
+            .filter((data: ProductEntry) => data.status === true)
+            .map((data: ProductEntry) => {
+                const imageUrl = `${assetBaseUrl}${data.product_image}`;
 
-            return (
-                <a
-                    href={`/disposable_brands/${data.id}`}
-                    class="shadow-lg border bg-sky-200 rounded-lg m-5"
-                >
-                    <div>
-                        <img
-                            src={imageUrl}
-                            width="500"
-                            alt={data.brand_name}
-                            class="w-[400px] h-[400px]"
-                        />
-                    </div>{" "}
-                    <div class="text-3xl my-5 capitalize text-center">
-                        {data.brand_name} - {data.price}
-                    </div>
-                    <div class="border font-bold m-5 rounded-md bg-blue-400  text-center p-2 text-3xl">
-                        See Flavors
-                    </div>
-                </a>
-            );
-        })
+                return (
+                    <a
+                        href={`/disposable_brands/${data.id}`}
+                        class="shadow-lg border bg-sky-200 rounded-lg m-5"
+                    >
+                        <div>
+                            <img
+                                src={imageUrl}
+                                width="500"
+                                alt={data.brand_name}
+                                class="w-[400px] h-[400px]"
+                            />
+                        </div>{" "}
+                        <div class="text-2xl my-5 text-wrap capitalize font-bold  text-center">
+                            {data.brand_name} - {data.price}
+                        </div>
+                        <div class="border font-semibold m-5 rounded-md bg-blue-400  text-center p-2 text-2xl">
+                            See Flavors
+                        </div>
+                    </a>
+                );
+            })
     }
 </div>

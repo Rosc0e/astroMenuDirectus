@@ -2,7 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import ItemFlavors from "@components/ItemFlavors.astro";
 const { item_id } = Astro.params;
-const directusUrl = import.meta.env.VITE_DIRECTUS_URL || "http://directus:8055";
+import { directusUrl } from "../../lib/directus";
 
 const data = await fetch(`${directusUrl}/items/saltnic_ejuice/${item_id}`);
 const item = await data.json();

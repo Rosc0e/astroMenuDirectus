@@ -15,6 +15,12 @@ const { item } = Astro.props;
     </div>
 
     <div class="text-4xl md:text-5xl capitalize mt-10">
-        {item.data.flavors.map((flavor: string) => <div>{flavor}</div>)}
+        {
+            item.data.flavors.map((flavor: string) => (
+                <div class="focus:underline decoration-fuchsia-500">
+                    {flavor}
+                </div>
+            ))
+        }
     </div>
 </div>

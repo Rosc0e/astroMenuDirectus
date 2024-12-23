@@ -3,14 +3,17 @@ import Layout from "@layouts/Layout.astro";
 import type { ProductEntry } from "src/lib/directus";
 import { assetBaseUrl } from "src/lib/directus";
 import ItemCategories from "@components/ItemCategories.astro";
-const directusUrl = import.meta.env.VITE_DIRECTUS_URL || "http://directus:8055";
+import { directusUrl } from "../../lib/directus";
+import directusClient from "src/lib/directus";
+import { readItems } from "@directus/sdk";
+// const res = await fetch(`${directusUrl}/items/disposables`, {
+//     method: "GET",
+// });
 
-const res = await fetch(`${directusUrl}/items/disposables`, {
-    method: "GET",
-});
+// const items = await res.json();
 
-const items = await res.json();
-console.log(items.data);
+const items = await directusClient.request(readItems("disposables"));
+console.log(items);
 ---
 
 <Layout>

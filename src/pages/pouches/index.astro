@@ -2,7 +2,8 @@
 import Layout from "@layouts/Layout.astro";
 import { assetBaseUrl } from "src/lib/directus";
 import ItemCategories from "@components/ItemCategories.astro";
-const directusUrl = import.meta.env.VITE_DIRECTUS_URL || "http://directus:8055";
+import { directusUrl } from "../../lib/directus";
+console.log(directusUrl);
 
 const res = await fetch(`${directusUrl}/items/pouches`, {
     method: "GET",
